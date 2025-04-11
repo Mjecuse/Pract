@@ -1,4 +1,4 @@
-package Githubrun;
+/* package Githubrun;
 
 public class Githubpractice {
 	public static void main(String[]args) {
@@ -12,4 +12,4 @@ public class Githubpractice {
 
 		//HI!!! IM COMMITTING A COMMENT AGAIN
 
-}
+} */

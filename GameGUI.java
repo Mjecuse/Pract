@@ -7,8 +7,8 @@ public class GameGUI extends JFrame {
     JPanel mainPanel;
 
     public GameGUI() {
-        setTitle("My RPG Game");
-        setSize(500, 400);
+        setTitle("The Game");
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

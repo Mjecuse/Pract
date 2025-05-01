@@ -1,0 +1,34 @@
+Java script for login, to store created user
+function login() {
+  const name = document.getElementById('loginName').value;
+  if (name.trim() === "") {
+    alert("Enter a name to continue");
+    return;
+  }
+
+  localStorage.setItem('playerName', name); // simulate session
+  document.querySelector('.login-screen').classList.remove('active');
+  document.querySelector('.title-screen').classList.add('active');
+}
+
+CreateCharacter class javascript
+const playerName = localStorage.getItem('playerName');
+const nameInput = document.getElementById('name').value;
+const name = nameInput || playerName || "Unknown";
+
+
+Set up a backend with:
+
+Amazon API Gateway + Lambda (lightweight and scalable)
+
+Store data in Amazon DynamoDB or S3
+APi Call:
+await fetch('https://your-api.com/players', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: playerName, class: chosenClass })
+});
+
+Fetch participant list:
+const res = await fetch('https://your-api.com/players');
+const players = await res.json();

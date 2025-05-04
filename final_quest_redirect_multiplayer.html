@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Quest - Start</title>
+  <script src="https://unpkg.com/aws-amplify@5.0.4/dist/aws-amplify.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #eaeaea;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      display: block;
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Join Final Quest</h1>
+    <input id="name" placeholder="Enter your name" />
+    <select id="class">
+      <option value="">Select your class</option>
+      <option value="warrior">Warrior</option>
+      <option value="mage">Mage</option>
+      <option value="rogue">Rogue</option>
+    </select>
+    <button onclick="joinGame()">Join Game</button>
+  </div>
+
+  <script>
+    aws_amplify.Amplify.configure({
+      aws_appsync_graphqlEndpoint: 'YOUR_GRAPHQL_ENDPOINT',
+      aws_appsync_region: 'YOUR_REGION',
+      aws_appsync_authenticationType: 'API_KEY',
+      aws_appsync_apiKey: 'YOUR_API_KEY'
+    });
+
+    async function joinGame() {
+      const name = document.getElementById('name').value.trim();
+      const characterClass = document.getElementById('class').value;
+      if (!name || !characterClass) return alert("Please enter name and class.");
+
+      const sessionId = prompt("Enter session ID (or create a new one):") || crypto.randomUUID();
+
+      const mutation = `
+        mutation CreatePlayer {
+          createPlayer(input: {
+            name: "${name}",
+            characterClass: "${characterClass}",
+            gameSessionId: "${sessionId}"
+          }) {
+            id
+          }
+        }
+      `;
+      try {
+        await aws_amplify.API.graphql({ query: mutation });
+        window.location.href = "https://staging.d1x42rvkvcnnsq.amplifyapp.com/Main_multiplayer.html?session=" + sessionId;
+      } catch (err) {
+        console.error(err);
+        alert("Error joining game.");
+      }
+    }
+  </script>
+</body>
+</html>
